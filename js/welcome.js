@@ -37,8 +37,8 @@ window.addEventListener('DOMContentLoaded', () => {
             bubbles[1].classList.remove('active');
             bubbles[2].classList.add('active');
             welcomeBtn.innerText = 'Get started!';
-            bgLayer1Path.style.fill="#8b3ad2"
-            bgLayer2Path.style.fill='#8b3ad2';
+            bgLayer1Path.style.fill = "#8b3ad2"
+            bgLayer2Path.style.fill = '#8b3ad2';
             state = 2;
         } else if (state === 2) {
             welcomeSlides[2].classList.add('slide--fade-out');
