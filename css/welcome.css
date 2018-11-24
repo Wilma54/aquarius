@@ -13,29 +13,316 @@
     box-sizing: border-box;
     padding: 0rem;
     margin: 0rem;
-    font-family: sans-serif;
+    font-family: "Proxima-Soft", sans-serif;
 }
 
 *:focus {
     outline: none;
 }
 
-#slide3,
-#slide2 {
-    display: none;
+/*
+    =====================================
+    ========== BG and Parent styles =====
+    =====================================
+*/
+
+.welcome {
+    height: 100vh;
+    max-width: 800px;
+    margin: 0 auto;
+
+    background: linear-gradient(#99B5FF, var(--accent-color));
+
+    display: flex;
+    flex-direction: column;
+
+    opacity: 1;
+    transition: transform 400ms, opacity 400ms;
+    overflow: hidden;
 }
 
-section {
-    background: linear-gradient(#99B5FF, var(--accent-color));
-    height: 100vh;
+.welcome--close {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.welcome__background-state-2 {
+    width: 100%;
+    height: 100%;
+    background: none;
+    transition: background 300ms;
+    position: relative;
+}
+
+.welcome__background-state-2-changed {
+    background: #fff;
+}
+
+/*
+    =====================================
+    ========== Header styles ============
+    =====================================
+*/
+
+.welcome__header {
+    position: relative;
+
+    height: 5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.welcome__header__logo--white,
+.welcome__header__logo--blue {
+    height: calc(100% - 2rem);
+    opacity: 0;
+    position: absolute;
+    transition: opacity 300ms;
+}
+
+.welcome__header__logo--show {
+    opacity: 1;
+}
+
+/*
+    =====================================
+    ========== Slide styles =============
+    =====================================
+*/
+
+.slides {
+    position: relative;
+}
+
+.slide {
+    padding: 1rem;
+
+    position: absolute;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    opacity: 0;
+    transform: translateX(100%) scale(1);
+    transition: transform 300ms, opacity 300ms;
+
+}
+
+.slide--fade-out {
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.slide--view {
+    width: 100%;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.slide__wrapper {
+    width: 80%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slide__img {
+    max-width: 400px;
+    margin-bottom: 2rem;
+}
+
+.slide__text--large {
+    line-height: 1.45;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.slide__text--light {
+    color: #fff;
+}
+
+.slide__text--dark {
+    color: #929292;
+}
+
+/*
+    =====================================
+    ========== Slide list styles ========
+    =====================================
+*/
+
+.slide__list {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
     flex-direction: column;
 }
 
-section header img {
-    width: 130px;
+.slide__list__item {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
-#slide1>img {
-    height: 240px;
+.slide__list__item__img {
+    padding: 1.25rem;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    background: #6B93FF;
+    color: #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.slide__list__item__header {
+    color: #6B93FF;
+    margin-bottom: 0.25rem;
+}
+
+/*
+    =====================================
+    ========== Footer styles ============
+    =====================================
+*/
+
+.welcome__footer {
+    width: 100%;
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.welcome__footer__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 166px;
+    height: 55px;
+    margin-bottom: 1rem;
+
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 8px;
+    outline: none;
+
+    color: #fff;
+    font-weight: 600;
+
+    transition: background 300ms;
+}
+
+.welcome__footer__btn:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.welcome__footer__bubbles {
+    padding: 1rem;
+    margin-bottom: 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*
+    =====================================
+    ========== Bubble styles ============
+    =====================================
+*/
+
+.bubble {
+    width: 8px;
+    height: 8px;
+    margin-left: 0.75rem;
+
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transition: background 300ms, width 300ms, height 300ms;
+}
+
+.bubble.active {
+    width: 12px;
+    height: 12px;
+
+    background: rgba(255, 255, 255, 1);
+}
+
+/*
+    =====================================
+    ========== Background layers ========
+    =====================================
+*/
+
+.welcome__background-layer-1,
+.welcome__background-layer-2 {
+    opacity: 0;
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    transition: opacity 300ms;
+    overflow: hidden;
+}
+
+.welcome__background-layer--fade-in {
+    opacity: 1;
+}
+
+.welcome__background-layer-1 {
+    width: 538px;
+    transform: translateX(0%) scale(1.2) translateY(20%);
+}
+
+.welcome__background-layer-2 {
+    width: 452px;
+    transform: translateX(0%) scaleX(1.2) translateY(35%);
+}
+
+
+/*
+    =====================================
+    ========== Extra Classes ============
+    =====================================
+*/
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+/*
+    =====================================
+    ========== @Media styles ============
+    =====================================
+*/
+
+@media screen and (min-width: 552px) {}
+
+@media screen and (min-width: 768px) {}
+
+@media screen and (min-width: 1050px) {}
