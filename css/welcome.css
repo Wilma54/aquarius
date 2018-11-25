@@ -283,22 +283,23 @@
     left: 0;
     bottom: 0;
 
-    transition: opacity 300ms;
+    transition: opacity 300ms, transform 500ms;
     overflow: hidden;
+}
+
+.welcome__background-layer-2 {
+    width: 452px;
+    transform: translateX(-100%) scaleX(1.2) translateY(35%);
 }
 
 .welcome__background-layer--fade-in {
     opacity: 1;
+    transform: translateX(-0%) scaleX(1.2) translateY(35%);
 }
 
 .welcome__background-layer-1 {
     width: 538px;
     transform: translateX(0%) scale(1.2) translateY(20%);
-}
-
-.welcome__background-layer-2 {
-    width: 452px;
-    transform: translateX(0%) scaleX(1.2) translateY(35%);
 }
 
 
