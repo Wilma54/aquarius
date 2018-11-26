@@ -4,6 +4,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const welcomeSlides = [].slice.call(welcome.querySelectorAll('.slide'));
     const welcomeBtn = welcome.querySelector('.welcome__footer__btn');
     const bubbles = [].slice.call(welcome.querySelectorAll('.bubble'));
+    const lightbox = document.querySelector('#welcome-lightbox');
 
     const bgLayer1 = welcome.querySelector('.welcome__background-layer-1');
     const bgLayer2 = welcome.querySelector('.welcome__background-layer-2');
@@ -41,6 +42,11 @@ window.addEventListener('DOMContentLoaded', () => {
             welcomeSlides[2].classList.remove('slide--view');
 
             welcome.classList.add('welcome--close');
+            lightbox.classList.add('close');
+            setTimeout(() => {
+                welcome.style.display = 'none';
+                lightbox.style.display = 'none';
+            }, 300)
             state = 3;
         }
     })
