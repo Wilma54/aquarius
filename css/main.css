@@ -302,6 +302,10 @@ nav ul li[data-menu-item="notes"] a.active {
     z-index: 20;
 }
 
+.ql-tag {
+    color: #444;
+}
+
 /*
 =======================================================
 ====== Button Styles ==================================
@@ -515,12 +519,13 @@ nav ul li[data-menu-item="notes"] a.active {
 }
 
 #foreground {
-transition: fill .4s;
+    transition: fill .4s;
 }
 
 #background {
-transition: fill .4s;
+    transition: fill .4s;
 }
+
 /*
     =====================================
     ========== Header styles ============

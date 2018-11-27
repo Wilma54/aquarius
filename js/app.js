@@ -14,6 +14,8 @@ var Font = Quill.import('formats/font');
 Font.whitelist = ['sans-serif', 'sofia', 'roboto', 'lobster'];
 Quill.register(Font, true);
 
+
+
 var toolbarOptions = [
   ['bold', 'italic', 'underline', 'strike'],
   [{
@@ -41,8 +43,11 @@ var toolbarOptions = [
     'align': []
   }],
   ['image'],
-  ['clean']
+  ['clean'],
+  ['tag']
 ];
+
+
 
 // Initialize Quill editor
 var quill = new Quill('#editor', {
@@ -305,7 +310,7 @@ function start() {
 // Click event for the notes in sidebar
 notesOutput.addEventListener('click', (e) => {
   const targetId = e.target.id;
-  if(e.target.tagName.toLowerCase() === "li") {
+  if (e.target.tagName.toLowerCase() === "li") {
     showMenu(false);
     getNote(targetId);
     currentNote = targetId;
@@ -362,7 +367,7 @@ document.getElementById('search-input').addEventListener('keyup', (event) => {
   let searchArray = [];
   notesArray.filter(note => {
     let noteContent = note.content.ops[0].insert.toLowerCase();
-    if(noteContent.includes(event.target.value.toLowerCase())){
+    if (noteContent.includes(event.target.value.toLowerCase())) {
       searchArray.push(note);
       clearDom('#notesOutput');
       showNotes(buildDom(searchArray));
@@ -375,3 +380,34 @@ document.getElementById('search-input').addEventListener('keyup', (event) => {
 document.getElementById('ql-picker-options-3').addEventListener('click', (event) => {
   quill.formatText(0, quill.getText().length, 'font', event.target.getAttribute("data-value"));
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  const tag = document.querySelector('.ql-tag');
+  const tagbtn = document.createElement('i');
+  tagbtn.classList.add('fas', 'fa-tag');
+  tag.appendChild(tagbtn);
+
+  tag.addEventListener('click', (e) => {
+    // Ask for tagg
+    let tag = prompt('Add a tag');
+
+    if (currentNote === '') {
+      // push tagg to obj.tag array
+      saveNote(currentNote);
+      const note = findNote(currentNote);
+      note.tags.push(tag);
+      saveNote(currentNote);
+    } else {
+      const note = findNote(currentNote);
+      note.tags.push(tag);
+      saveNote(currentNote);
+    }
+  });
+
+  tag.addEventListener('blur', () => {
+    document.querySelector('.ql-editor').focus();
+  });
+  start();
+})
