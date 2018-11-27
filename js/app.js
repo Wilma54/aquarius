@@ -357,6 +357,21 @@ function showAllNotes() {
   clearActive(menuItems);
   setActive(getMenuItem('notes'), 'Notes');
 }
+
+document.getElementById('search-input').addEventListener('keyup', (event) => {
+  let searchArray = [];
+  notesArray.filter(note => {
+    let noteContent = note.content.ops[0].insert.toLowerCase();
+    if(noteContent.includes(event.target.value.toLowerCase())){
+      searchArray.push(note);
+      clearDom('#notesOutput');
+      showNotes(buildDom(searchArray));
+    } else {
+      return;
+    }
+  })
+});
+
 document.getElementById('ql-picker-options-3').addEventListener('click', (event) => {
   quill.formatText(0, quill.getText().length, 'font', event.target.getAttribute("data-value"));
-  });
+});
