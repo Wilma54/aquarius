@@ -8,6 +8,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const bgLayer1 = welcome.querySelector('.welcome__background-layer-1');
     const bgLayer2 = welcome.querySelector('.welcome__background-layer-2');
+    const bgLayer1Path = welcome.querySelector('#background');
+    const bgLayer2Path = welcome.querySelector('#foreground');
     let state = 0;
 
     welcomeBtn.addEventListener('click', () => {
@@ -35,7 +37,8 @@ window.addEventListener('DOMContentLoaded', () => {
             bubbles[1].classList.remove('active');
             bubbles[2].classList.add('active');
             welcomeBtn.innerText = 'Get started!';
-
+            bgLayer1Path.style.fill="#8b3ad2"
+            bgLayer2Path.style.fill='#8b3ad2';
             state = 2;
         } else if (state === 2) {
             welcomeSlides[2].classList.add('slide--fade-out');

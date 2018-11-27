@@ -128,7 +128,7 @@ a {
 }
 
 /*
-====== Notes section Styles ==================== 
+====== Notes section Styles ====================
 */
 
 #notes {
@@ -430,7 +430,7 @@ nav ul li[data-menu-item="notes"] a.active {
     pointer-events: all;
 }
 
-/* 
+/*
 =======================================================
 ====== Scrollbar styles ===============================
 =======================================================
@@ -514,6 +514,13 @@ nav ul li[data-menu-item="notes"] a.active {
     background: #fff;
 }
 
+#foreground {
+transition: fill .4s;
+}
+
+#background {
+transition: fill .4s;
+}
 /*
     =====================================
     ========== Header styles ============
@@ -782,7 +789,7 @@ nav ul li[data-menu-item="notes"] a.active {
     }
 
     .welcome {
-        width: 600px;
+        width: 500px;
         max-height: calc(100vh - 2rem);
         top: 1rem;
         left: 0;
