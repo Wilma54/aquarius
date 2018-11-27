@@ -4,6 +4,7 @@ const newBtn = document.querySelector("#new-btn");
 const notesDiv = document.querySelector('#notes');
 const notesArray = [];
 let favArray = [];
+let searchArray = [];
 let domArray = [];
 let currentNote = '';
 
@@ -253,7 +254,12 @@ function createElement(obj) {
     let noteIndex = notesArray.map(n => n.id).indexOf(note);
     notesArray.splice(noteIndex, 1);
     clearDom('#notes-output');
-    showNotes(buildDom(notesArray));
+    if(search.value.length !== 0) {
+      searchArray = searchArray.filter(n => n.id !== note);
+      showNotes(buildDom(searchArray));
+    } else {
+      showNotes(buildDom(notesArray));
+    }
     localStorage.setItem('note', JSON.stringify(notesArray));
   }
 
@@ -362,9 +368,9 @@ function showAllNotes() {
   clearActive(menuItems);
   setActive(getMenuItem('notes'), 'Notes');
 }
-
-document.getElementById('search-input').addEventListener('keyup', (event) => {
-  let searchArray = [];
+const search = document.getElementById('search-input');
+search.addEventListener('keyup', (event) => {
+  searchArray = [];
   notesArray.filter(note => {
     let noteContent = note.content.ops[0].insert.toLowerCase();
     if (noteContent.includes(event.target.value.toLowerCase())) {
@@ -376,8 +382,8 @@ document.getElementById('search-input').addEventListener('keyup', (event) => {
     }
   })
 });
-
-document.getElementById('ql-picker-options-3').addEventListener('click', (event) => {
+const qlPicker = document.getElementById('ql-picker-options-3');
+qlPicker.addEventListener('click', (event) => {
   quill.formatText(0, quill.getText().length, 'font', event.target.getAttribute("data-value"));
 });
 
