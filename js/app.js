@@ -434,19 +434,3 @@ function tagBadgeCreater(tag) {
   notesDiv.querySelector(".tag-list").appendChild(li);
 
 }
-
-
-// function tagFilter(tag) {
-//   document.getElementById(tag).addEventListener('click', (event) => {
-//       let tagArray = [];
-//       notesArray.filter(note => {
-//           if (note.tag === tag)) {
-//           tagArray.push(note);
-//           clearDom('#notesOutput');
-//           showNotes(buildDom(Array));
-//         } else {
-//           return;
-//         }
-//       })
-//   });
-// }
