@@ -2,10 +2,8 @@ const notesOutput = document.querySelector('#notes-output');
 const saveBtn = document.querySelector("#save-btn");
 const newBtn = document.querySelector("#new-btn");
 const notesDiv = document.querySelector('#notes');
-const welcome = document.querySelector('#welcome-lightbox');
 const notesArray = [];
 let favArray = [];
-let searchArray = [];
 let domArray = [];
 let currentNote = '';
 
@@ -15,8 +13,6 @@ const menuItems = [].slice.call(mainMenu.children);
 var Font = Quill.import('formats/font');
 Font.whitelist = ['sans-serif', 'sofia', 'roboto', 'lobster'];
 Quill.register(Font, true);
-
-
 
 var toolbarOptions = [
   ['bold', 'italic', 'underline', 'strike'],
@@ -45,11 +41,8 @@ var toolbarOptions = [
     'align': []
   }],
   ['image'],
-  ['clean'],
-  ['tag']
+  ['clean']
 ];
-
-
 
 // Initialize Quill editor
 var quill = new Quill('#editor', {
@@ -255,12 +248,7 @@ function createElement(obj) {
     let noteIndex = notesArray.map(n => n.id).indexOf(note);
     notesArray.splice(noteIndex, 1);
     clearDom('#notes-output');
-    if (search.value.length !== 0) {
-      searchArray = searchArray.filter(n => n.id !== note);
-      showNotes(buildDom(searchArray));
-    } else {
-      showNotes(buildDom(notesArray));
-    }
+    showNotes(buildDom(notesArray));
     localStorage.setItem('note', JSON.stringify(notesArray));
   }
 
@@ -303,11 +291,9 @@ function clearDom() {
 function start() {
   let storage = JSON.parse(localStorage.getItem('note'));
   if (storage !== null) {
-    welcome.style.display = 'none';
     storage.forEach(el => notesArray.push(el));
     clearDom('#notes-output');
     showNotes(buildDom(notesArray));
-    getNote(notesArray[0].id);
   } else {
     console.log('start(): No notes in memory.');
   }
@@ -372,9 +358,8 @@ function showAllNotes() {
   setActive(getMenuItem('notes'), 'Notes');
 }
 
-const search = document.getElementById('search-input');
-search.addEventListener('keyup', (event) => {
-  searchArray = [];
+document.getElementById('search-input').addEventListener('keyup', (event) => {
+  let searchArray = [];
   notesArray.filter(note => {
     let noteContent = note.content.ops[0].insert.toLowerCase();
     if (noteContent.includes(event.target.value.toLowerCase())) {
@@ -387,38 +372,52 @@ search.addEventListener('keyup', (event) => {
   })
 });
 
-const qlPicker = document.getElementById('ql-picker-options-3');
-qlPicker.addEventListener('click', (event) => {
+document.getElementById('ql-picker-options-3').addEventListener('click', (event) => {
   quill.formatText(0, quill.getText().length, 'font', event.target.getAttribute("data-value"));
 });
 
 
-document.addEventListener('DOMContentLoaded', () => {
 
-  const tag = document.querySelector('.ql-tag');
-  const tagbtn = document.createElement('i');
-  tagbtn.classList.add('fas', 'fa-tag');
-  tag.appendChild(tagbtn);
+function tagColor() {
+  let randomNum = Math.floor(Math.random() * 360) + 1;
+  let randomColor = "hsla(" + randomNum + ",58%,55%,1)";
+  console.log(randomColor)
+  return randomColor;
+};
 
-  tag.addEventListener('click', (e) => {
-    // Ask for tagg
-    let tag = prompt('Add a tag');
 
-    if (currentNote === '') {
-      // push tagg to obj.tag array
-      saveNote(currentNote);
-      const note = findNote(currentNote);
-      note.tags.push(tag);
-      saveNote(currentNote);
-    } else {
-      const note = findNote(currentNote);
-      note.tags.push(tag);
-      saveNote(currentNote);
-    }
-  });
+function tagBadgeCreater(tag) {
+  const li = document.createElement("LI");
+  const span = document.createElement("SPAN");
+  const a = document.createElement("A");
+  const i = document.createElement("I");
+  const textnode = document.createTextNode(tag);
 
-  tag.addEventListener('blur', () => {
-    document.querySelector('.ql-editor').focus();
-  });
-  start();
-})
+  li.classList.add('tag-list-item');
+  a.classList.add('badge');
+  i.classList.add('fas', 'fa-tag');
+
+  li.appendChild(a);
+  a.appendChild(i);
+  a.appendChild(span);
+  span.appendChild(textnode);
+  a.style.background = tagColor();
+  notesDiv.querySelector(".tag-list").appendChild(li);
+
+}
+
+
+// function tagFilter(tag) {
+//   document.getElementById(tag).addEventListener('click', (event) => {
+//       let tagArray = [];
+//       notesArray.filter(note => {
+//           if (note.tag === tag)) {
+//           tagArray.push(note);
+//           clearDom('#notesOutput');
+//           showNotes(buildDom(Array));
+//         } else {
+//           return;
+//         }
+//       })
+//   });
+// }

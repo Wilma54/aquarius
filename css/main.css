@@ -180,7 +180,7 @@ a {
 /* Tag list styles */
 
 #tag-container {
-    padding: 1rem;
+    padding: 0.8rem;
     border-radius: 5px;
     margin-bottom: 0.5rem;
     background-color: var(--search-field);
@@ -191,10 +191,11 @@ a {
     justify-content: flex-start;
     align-items: center;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .tag-list-item {
-    margin-right: 0.75rem;
+    margin: 0.2rem;
     list-style: none;
     display: flex;
     flex-direction: row;
@@ -203,6 +204,7 @@ a {
 
 .badge {
     font-size: 0.75rem;
+    font-weight: 600;
     padding: 0.3rem 0.3rem 0.35rem;
     background: hsl(227, 58%, 65%);
     color: #fff;
