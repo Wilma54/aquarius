@@ -2,6 +2,7 @@ const notesOutput = document.querySelector('#notes-output');
 const saveBtn = document.querySelector("#save-btn");
 const newBtn = document.querySelector("#new-btn");
 const notesDiv = document.querySelector('#notes');
+const welcome = document.querySelector('#welcome-lightbox');
 const notesArray = [];
 let favArray = [];
 let domArray = [];
@@ -41,7 +42,7 @@ var toolbarOptions = [
     'align': []
   }],
   ['image'],
-  ['clean']
+  ['tag']
 ];
 
 // Initialize Quill editor
@@ -291,9 +292,11 @@ function clearDom() {
 function start() {
   let storage = JSON.parse(localStorage.getItem('note'));
   if (storage !== null) {
+    welcome.style.display = 'none';
     storage.forEach(el => notesArray.push(el));
     clearDom('#notes-output');
     showNotes(buildDom(notesArray));
+    getNote(notesArray[0].id);
   } else {
     console.log('start(): No notes in memory.');
   }
@@ -375,6 +378,32 @@ document.getElementById('search-input').addEventListener('keyup', (event) => {
 document.getElementById('ql-picker-options-3').addEventListener('click', (event) => {
   quill.formatText(0, quill.getText().length, 'font', event.target.getAttribute("data-value"));
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const tag = document.querySelector('.ql-tag');
+  const tagbtn = document.createElement('i');
+  tagbtn.classList.add('fas', 'fa-tag');
+  tag.appendChild(tagbtn);
+  tag.addEventListener('click', (e) => {
+    // Ask for tagg
+    let tag = prompt('Add a tag');
+    if (currentNote === '') {
+      // push tagg to obj.tag array
+      saveNote(currentNote);
+      const note = findNote(currentNote);
+      note.tags.push(tag);
+      saveNote(currentNote);
+    } else {
+      const note = findNote(currentNote);
+      note.tags.push(tag);
+      saveNote(currentNote);
+    }
+  });
+  tag.addEventListener('blur', () => {
+    document.querySelector('.ql-editor').focus();
+  });
+  start();
+})
 
 
 
