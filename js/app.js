@@ -254,7 +254,7 @@ function createElement(obj) {
     let noteIndex = notesArray.map(n => n.id).indexOf(note);
     notesArray.splice(noteIndex, 1);
     clearDom('#notes-output');
-    if(search.value.length !== 0) {
+    if (search.value.length !== 0) {
       searchArray = searchArray.filter(n => n.id !== note);
       showNotes(buildDom(searchArray));
     } else {
@@ -368,6 +368,7 @@ function showAllNotes() {
   clearActive(menuItems);
   setActive(getMenuItem('notes'), 'Notes');
 }
+
 const search = document.getElementById('search-input');
 search.addEventListener('keyup', (event) => {
   searchArray = [];
@@ -382,6 +383,7 @@ search.addEventListener('keyup', (event) => {
     }
   })
 });
+
 const qlPicker = document.getElementById('ql-picker-options-3');
 qlPicker.addEventListener('click', (event) => {
   quill.formatText(0, quill.getText().length, 'font', event.target.getAttribute("data-value"));
