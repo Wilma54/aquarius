@@ -177,6 +177,51 @@ a {
     border-radius: 5px;
 }
 
+/* Tag list styles */
+
+#tag-container {
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    background-color: var(--search-field);
+}
+
+.tag-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+}
+
+.tag-list-item {
+    margin-right: 0.75rem;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.3rem 0.35rem;
+    background: hsl(227, 58%, 65%);
+    color: #fff;
+    border-radius: 0.25rem;
+    box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.2);
+    opacity: 0.8;
+    transition: opacity 300ms, transform 500ms;
+    perspective: 30cm;
+}
+
+.badge:hover {
+    opacity: 1;
+    transform: translateY(-5%);
+}
+
+.badge .fas {
+    margin-right: 0.3rem;
+}
+
 /* Note list styles */
 
 #notes ul li.note {
