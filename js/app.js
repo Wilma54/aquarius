@@ -2,6 +2,7 @@ const notesOutput = document.querySelector('#notes-output');
 const saveBtn = document.querySelector("#save-btn");
 const newBtn = document.querySelector("#new-btn");
 const notesDiv = document.querySelector('#notes');
+const welcome = document.querySelector('#welcome-lightbox');
 const notesArray = [];
 let favArray = [];
 let searchArray = [];
@@ -302,9 +303,11 @@ function clearDom() {
 function start() {
   let storage = JSON.parse(localStorage.getItem('note'));
   if (storage !== null) {
+    welcome.style.display = 'none';
     storage.forEach(el => notesArray.push(el));
     clearDom('#notes-output');
     showNotes(buildDom(notesArray));
+    getNote(notesArray[0].id);
   } else {
     console.log('start(): No notes in memory.');
   }

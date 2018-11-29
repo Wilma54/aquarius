@@ -621,6 +621,12 @@ nav ul li[data-menu-item="notes"] a.active {
     color: #929292;
 }
 
+.slide-welcome {
+    font-family: "Lobster";
+    color: hsl(272, 63%, 63%);
+    font-size: 2rem;
+}
+
 /*
     =====================================
     ========== Slide list styles ========
