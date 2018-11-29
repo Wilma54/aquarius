@@ -518,7 +518,6 @@ nav ul li[data-menu-item="notes"] a.active {
     background: #fff;
 }
 
-<<<<<<< HEAD
 #foreground {
     transition: fill .4s;
 }
@@ -527,8 +526,6 @@ nav ul li[data-menu-item="notes"] a.active {
     transition: fill .4s;
 }
 
-=======
->>>>>>> Added welcome screen width lightbox
 /*
     =====================================
     ========== Header styles ============
@@ -797,11 +794,7 @@ nav ul li[data-menu-item="notes"] a.active {
     }
 
     .welcome {
-<<<<<<< HEAD
         width: 500px;
-=======
-        width: 600px;
->>>>>>> Added welcome screen width lightbox
         max-height: calc(100vh - 2rem);
         top: 1rem;
         left: 0;
