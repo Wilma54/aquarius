@@ -3,7 +3,9 @@ const saveBtn = document.querySelector("#save-btn");
 const newBtn = document.querySelector("#new-btn");
 const notesDiv = document.querySelector('#notes');
 const welcome = document.querySelector('#welcome-lightbox');
+const tagList = notesDiv.querySelector('.tag-list');
 const notesArray = [];
+let tagsArray = [];
 let favArray = [];
 let domArray = [];
 let currentNote = '';
@@ -209,6 +211,7 @@ function buildDom(array) {
 // Function that takes an object and creates a <li> with contents
 function createElement(obj) {
   const li = document.createElement('li');
+  const wrapperDiv = document.createElement('div');
   const mainDiv = document.createElement('div');
   const h4 = document.createElement('h4');
   const p = document.createElement('p');
@@ -247,6 +250,9 @@ function createElement(obj) {
   removeBtn.onclick = function (e) {
     let note = e.target.parentNode.parentNode.id;
     let noteIndex = notesArray.map(n => n.id).indexOf(note);
+    if (noteIndex === -1) {
+      noteIndex = 0;
+    }
     notesArray.splice(noteIndex, 1);
     clearDom('#notes-output');
     showNotes(buildDom(notesArray));
@@ -267,13 +273,30 @@ function createElement(obj) {
   btnDiv.appendChild(favBtn);
   btnDiv.appendChild(removeBtn);
 
+  wrapperDiv.classList.add('note-item-wrapper');
+
   // Adds the class and id to <li>
   li.classList.add('note');
   li.id = obj.id;
 
   // Append all elements to <li> in correct order
-  li.appendChild(mainDiv);
-  li.appendChild(btnDiv);
+  wrapperDiv.appendChild(mainDiv);
+  wrapperDiv.appendChild(btnDiv);
+  li.appendChild(wrapperDiv);
+  // If tags exsist
+  if (obj.tags.length > 0) {
+    // append them in UL element
+    console.log(obj.tags);
+    let objTags = [];
+    const tags = document.createElement('ul');
+    tags.classList.add('note-tags');
+    for (let i = 0; i < obj.tags.length; i++) {
+      objTags.push(tagsArray.find(tag => tag.name === obj.tags[i]));
+    }
+    console.log(objTags);
+    appendListToElement(objTags, tags);
+    li.appendChild(tags);
+  }
   return li;
 }
 
@@ -291,14 +314,19 @@ function clearDom() {
 
 function start() {
   let storage = JSON.parse(localStorage.getItem('note'));
-  if (storage !== null) {
+  if (storage === null) {
+    console.log('start(): No notes in memory (new user)');
+  } else if (storage.length === 0) {
+    console.log('start(): No notes in memory (exsisting user)');
     welcome.style.display = 'none';
+  } else {
+    welcome.style.display = 'none';
+    getTags();
     storage.forEach(el => notesArray.push(el));
     clearDom('#notes-output');
     showNotes(buildDom(notesArray));
     getNote(notesArray[0].id);
-  } else {
-    console.log('start(): No notes in memory.');
+    currentNote = notesArray[0].id;
   }
   clearActive(menuItems);
   setActive(getMenuItem('notes'), 'Notes');
@@ -386,16 +414,20 @@ document.addEventListener('DOMContentLoaded', () => {
   tag.appendChild(tagbtn);
   tag.addEventListener('click', (e) => {
     // Ask for tagg
-    let tag = prompt('Add a tag');
+    let newTag = prompt('Add a tag').toLowerCase();
     if (currentNote === '') {
       // push tagg to obj.tag array
       saveNote(currentNote);
       const note = findNote(currentNote);
-      note.tags.push(tag);
+      note.tags.push(newTag);
+      addNewTag(newTag);
       saveNote(currentNote);
+    } else if (findNote(currentNote).tags.find(tag => tag.toLowerCase() === newTag)) {
+      return alert('You already have the tag: ' + newTag + ' added to this note.');
     } else {
       const note = findNote(currentNote);
-      note.tags.push(tag);
+      note.tags.push(newTag);
+      addNewTag(newTag);
       saveNote(currentNote);
     }
   });
@@ -407,30 +439,96 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-function tagColor() {
+function badgeColor() {
   let randomNum = Math.floor(Math.random() * 360) + 1;
   let randomColor = "hsla(" + randomNum + ",58%,55%,1)";
   console.log(randomColor)
   return randomColor;
 };
 
+// takes tag object and returns a li element
+function tagBadgeCreater(name, color, amount) {
+  // create all elements
+  const li = document.createElement("li");
+  const span = document.createElement("span");
+  const a = document.createElement("a");
+  const i = document.createElement("i");
+  const textnode = document.createTextNode(name);
 
-function tagBadgeCreater(tag) {
-  const li = document.createElement("LI");
-  const span = document.createElement("SPAN");
-  const a = document.createElement("A");
-  const i = document.createElement("I");
-  const textnode = document.createTextNode(tag);
-
+  // add classes
   li.classList.add('tag-list-item');
   a.classList.add('badge');
+  a.href = '#';
   i.classList.add('fas', 'fa-tag');
 
+  // append and return li element
   li.appendChild(a);
   a.appendChild(i);
   a.appendChild(span);
   span.appendChild(textnode);
-  a.style.background = tagColor();
-  notesDiv.querySelector(".tag-list").appendChild(li);
-
+  if (amount > 1) {
+    const span1 = document.createElement('span');
+    const am = document.createTextNode(amount);
+    span1.appendChild(am);
+    span1.classList.add('tag-amount');
+    a.appendChild(span1);
+  }
+  a.style.background = color;
+  return li;
 }
+
+// Loop through all tags
+function appendListToElement(arr, element) {
+  element.innerHTML = '';
+  arr.forEach(tag => {
+    // Create badge for each tag and append to .tag-list
+    element.appendChild(tagBadgeCreater(tag.name, tag.color, tag.amount));
+  })
+}
+
+function saveTags() {
+  const json = JSON.stringify(tagsArray);
+  localStorage.setItem('tags', json);
+}
+
+function getTags() {
+  const parse = JSON.parse(localStorage.getItem('tags'));
+  if (parse != null) {
+    parse.forEach(tag => tagsArray.unshift(tag));
+    appendListToElement(tagsArray, tagList);
+  }
+}
+
+// add new tag to tag array
+function addNewTag(tagName) {
+  // if tag exsist in array, add 1 to amount property 
+  if (tagsArray.find(tag => tag.name.toLowerCase() === tagName.toLowerCase())) {
+    console.log('addTag(): ' + tagName + ' Exsist in array. Adding 1 to amount');
+    let tagFound = tagsArray.find(tag => tag.name.toLowerCase() === tagName.toLowerCase());
+    tagFound.amount = tagFound.amount + 1;
+
+  } else { //else push tag to array
+    const tagobj = {
+      name: tagName,
+      color: badgeColor(),
+      amount: 1
+    }
+    tagsArray.unshift(tagobj);
+    console.log('addTag(): Added tag ' + tagName + ' to tagsArray');
+  }
+  saveTags();
+  appendListToElement(tagsArray, tagList);
+}
+
+
+
+/* ===  TO DO   ====================================================================
+  *** - Thoughts that left me friday the 30th of November - 1:13AM
+
+  *== [] - When creating a new tag, it should be saved as an object within the note
+  *== [] - When reloaded, the notes should be looped through to get the tags
+  *== [?] - Should the tags be in it's own array?
+  *== [] - If so, write a function that creates a new array of tag objects out of the names in the note.tags array. 
+  *== [?] - Is it good to randomize the colors of tags?
+  *== [] - If so, is it okay to generate a new color each time user refresh? (or tagsArray)
+*/

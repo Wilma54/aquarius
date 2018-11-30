@@ -184,6 +184,14 @@ a {
     border-radius: 5px;
     margin-bottom: 0.5rem;
     background-color: var(--search-field);
+    display: flex;
+    align-items: center;
+}
+
+.tag-container-header {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-right: 0.5rem;
 }
 
 .tag-list {
@@ -211,13 +219,27 @@ a {
     border-radius: 0.25rem;
     box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.2);
     opacity: 0.8;
-    transition: opacity 300ms, transform 500ms;
+    transition: opacity 200ms;
     perspective: 30cm;
 }
 
 .badge:hover {
     opacity: 1;
-    transform: translateY(-5%);
+}
+
+.tag-amount {
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1px 3px;
+    margin-left: 0.25rem;
+}
+
+
+
+.note-tags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .badge .fas {
@@ -237,7 +259,7 @@ a {
     position: relative;
 }
 
-#notes ul li div:nth-of-type(1) {
+#notes ul li.note * {
     pointer-events: none;
 }
 
@@ -247,29 +269,34 @@ a {
     transform: translateX(0.5em);
 }
 
-#notes ul li.note h4 {
+#notes ul li.note .note-item-wrapper div h4 {
     margin-bottom: 0.5em;
 }
 
-#notes ul li.note p:nth-last-child(2) {
+#notes ul li.note .note-item-wrapper div p:nth-last-child(2) {
     margin-bottom: 0.5em;
 }
 
-#notes ul li.note p:nth-last-child(1) {
+#notes ul li.note .note-item-wrapper div p:nth-last-child(1) {
     font-size: 0.75em;
     color: var(--muted);
 }
 
-#notes ul li.note {
+#notes ul li.note .note-item-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 0.25rem;
 }
 
-#notes ul li.note i {
+#notes ul li.note .note-item-wrapper div i {
     font-size: 1.25em;
     padding: 0.5rem;
+    pointer-events: all;
+}
+
+#notes ul li.note .note-tags li * {
     pointer-events: all;
 }
 
