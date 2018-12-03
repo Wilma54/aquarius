@@ -16,6 +16,7 @@ const menuItems = [].slice.call(mainMenu.children);
 var Font = Quill.import('formats/font');
 Font.whitelist = ['sans-serif', 'sofia', 'roboto', 'lobster'];
 Quill.register(Font, true);
+Quill.register('modules/markdownShortcuts', MarkdownShortcuts)
 
 var toolbarOptions = [
   ['bold', 'italic', 'underline', 'strike'],
@@ -50,7 +51,8 @@ var toolbarOptions = [
 // Initialize Quill editor
 var quill = new Quill('#editor', {
   modules: {
-    toolbar: toolbarOptions
+    toolbar: toolbarOptions,
+    markdownShortcuts: {}
   },
   theme: 'snow'
 });
@@ -247,7 +249,7 @@ function createElement(obj) {
 
   removeBtn.classList.add('fas', 'fa-times');
   removeBtn.id = 'remove-btn';
-  removeBtn.onclick = function (e) {
+  removeBtn.onclick = function(e) {
     let note = e.target.parentNode.parentNode.id;
     let noteIndex = notesArray.map(n => n.id).indexOf(note);
     if (noteIndex === -1) {
@@ -501,7 +503,7 @@ function getTags() {
 
 // add new tag to tag array
 function addNewTag(tagName) {
-  // if tag exsist in array, add 1 to amount property 
+  // if tag exsist in array, add 1 to amount property
   if (tagsArray.find(tag => tag.name.toLowerCase() === tagName.toLowerCase())) {
     console.log('addTag(): ' + tagName + ' Exsist in array. Adding 1 to amount');
     let tagFound = tagsArray.find(tag => tag.name.toLowerCase() === tagName.toLowerCase());
@@ -528,7 +530,7 @@ function addNewTag(tagName) {
   *== [] - When creating a new tag, it should be saved as an object within the note
   *== [] - When reloaded, the notes should be looped through to get the tags
   *== [?] - Should the tags be in it's own array?
-  *== [] - If so, write a function that creates a new array of tag objects out of the names in the note.tags array. 
+  *== [] - If so, write a function that creates a new array of tag objects out of the names in the note.tags array.
   *== [?] - Is it good to randomize the colors of tags?
   *== [] - If so, is it okay to generate a new color each time user refresh? (or tagsArray)
 */
