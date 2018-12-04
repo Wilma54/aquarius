@@ -210,6 +210,10 @@ a {
     align-items: center;
 }
 
+.tag-list-item .badge * {
+    pointer-events: none;
+}
+
 .badge {
     font-size: 0.75rem;
     font-weight: 600;

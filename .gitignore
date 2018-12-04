@@ -7,3 +7,5 @@ readme.txt
 *.zip
 
 # Ignore files in folders below
+js/test.js
+test.html

@@ -6,7 +6,8 @@ const welcome = document.querySelector('#welcome-lightbox');
 const tagList = notesDiv.querySelector('.tag-list');
 const notesArray = [];
 let tagsArray = [];
-let favArray = [];
+let tempArray = [];
+let filterArray = [];
 let domArray = [];
 let currentNote = '';
 
@@ -254,6 +255,7 @@ function createElement(obj) {
       noteIndex = 0;
     }
     notesArray.splice(noteIndex, 1);
+    updateTags();
     clearDom('#notes-output');
     showNotes(buildDom(notesArray));
     localStorage.setItem('note', JSON.stringify(notesArray));
@@ -283,17 +285,16 @@ function createElement(obj) {
   wrapperDiv.appendChild(mainDiv);
   wrapperDiv.appendChild(btnDiv);
   li.appendChild(wrapperDiv);
+
   // If tags exsist
   if (obj.tags.length > 0) {
     // append them in UL element
-    console.log(obj.tags);
     let objTags = [];
     const tags = document.createElement('ul');
     tags.classList.add('note-tags');
     for (let i = 0; i < obj.tags.length; i++) {
       objTags.push(tagsArray.find(tag => tag.name === obj.tags[i]));
     }
-    console.log(objTags);
     appendListToElement(objTags, tags);
     li.appendChild(tags);
   }
@@ -314,6 +315,7 @@ function clearDom() {
 
 function start() {
   let storage = JSON.parse(localStorage.getItem('note'));
+  getTags();
   if (storage === null) {
     console.log('start(): No notes in memory (new user)');
   } else if (storage.length === 0) {
@@ -321,13 +323,15 @@ function start() {
     welcome.style.display = 'none';
   } else {
     welcome.style.display = 'none';
-    getTags();
     storage.forEach(el => notesArray.push(el));
     clearDom('#notes-output');
+    console.log("start");
+    console.log(notesArray);
     showNotes(buildDom(notesArray));
     getNote(notesArray[0].id);
     currentNote = notesArray[0].id;
   }
+
   clearActive(menuItems);
   setActive(getMenuItem('notes'), 'Notes');
 }
@@ -350,7 +354,7 @@ function printNote() {
 function favPush() {
   notesArray.forEach(note => {
     if (note.favourite === true) {
-      favArray.push(note);
+      filterArray.push(note);
     }
   })
 }
@@ -373,16 +377,16 @@ function clearActive(arr) {
 }
 
 function showFavourites() {
-  favArray = [];
+  filterArray = [];
   favPush();
   clearDom('#notesOutput');
-  showNotes(buildDom(favArray));
+  showNotes(buildDom(filterArray));
   clearActive(menuItems);
   setActive(getMenuItem('favourites'), 'Favourites');
 }
 
 function showAllNotes() {
-  favArray = [];
+  filterArray = [];
   clearDom('#notesOutput');
   showNotes(buildDom(notesArray));
   clearActive(menuItems);
@@ -390,13 +394,13 @@ function showAllNotes() {
 }
 
 document.getElementById('search-input').addEventListener('keyup', (event) => {
-  let searchArray = [];
+  filterArray = [];
   notesArray.filter(note => {
     let noteContent = note.content.ops[0].insert.toLowerCase();
     if (noteContent.includes(event.target.value.toLowerCase())) {
-      searchArray.push(note);
+      filterArray.push(note);
       clearDom('#notesOutput');
-      showNotes(buildDom(searchArray));
+      showNotes(buildDom(filterArray));
     } else {
       return;
     }
@@ -413,6 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
   tagbtn.classList.add('fas', 'fa-tag');
   tag.appendChild(tagbtn);
   tag.addEventListener('click', (e) => {
+    console.log("click tag happened");
     // Ask for tagg
     let newTag = prompt('Add a tag').toLowerCase();
     if (currentNote === '') {
@@ -434,6 +439,11 @@ document.addEventListener('DOMContentLoaded', () => {
   tag.addEventListener('blur', () => {
     document.querySelector('.ql-editor').focus();
   });
+  tagList.addEventListener('click', (e) => {
+    const tagValue = e.target.children[1].innerHTML;
+    filterNotes(tagValue)
+  })
+
   start();
 })
 
@@ -447,7 +457,7 @@ function badgeColor() {
 };
 
 // takes tag object and returns a li element
-function tagBadgeCreater(name, color, amount) {
+function tagBadgeCreater(name, color, amount = 0) {
   // create all elements
   const li = document.createElement("li");
   const span = document.createElement("span");
@@ -479,24 +489,45 @@ function tagBadgeCreater(name, color, amount) {
 
 // Loop through all tags
 function appendListToElement(arr, element) {
-  element.innerHTML = '';
-  arr.forEach(tag => {
-    // Create badge for each tag and append to .tag-list
-    element.appendChild(tagBadgeCreater(tag.name, tag.color, tag.amount));
-  })
+  console.log("yo THIS IS ALTE");
+  console.log(arr);
+  if (arr.length > 0 && typeof arr[0] != 'undefined') {
+    element.innerHTML = '';
+    arr.forEach(tag => {
+      console.log(tag);
+      // Create badge for each tag and append to .tag-list
+      element.appendChild(tagBadgeCreater(tag.name, tag.color, tag.amount));
+    })
+  }
 }
 
 function saveTags() {
+  console.log("ST");
+  console.log(tagsArray);
   const json = JSON.stringify(tagsArray);
   localStorage.setItem('tags', json);
 }
 
 function getTags() {
   const parse = JSON.parse(localStorage.getItem('tags'));
-  if (parse != null) {
+  if (parse !== null) {
     parse.forEach(tag => tagsArray.unshift(tag));
-    appendListToElement(tagsArray, tagList);
   }
+  appendListToElement(tagsArray, tagList);
+}
+
+function updateTags() {
+  getTags();
+  if (notesArray.length === 0) {
+    return;
+  } else if (notesArray.forEach(note => note.tags.length === 0)) {
+    console.log('no tags');
+    tagsArray = [];
+  } else {
+
+  }
+  saveTags();
+  appendListToElement(tagsArray, tagList);
 }
 
 // add new tag to tag array
@@ -511,24 +542,31 @@ function addNewTag(tagName) {
     const tagobj = {
       name: tagName,
       color: badgeColor(),
-      amount: 1
+      amount: 1,
+      active: false
     }
     tagsArray.unshift(tagobj);
     console.log('addTag(): Added tag ' + tagName + ' to tagsArray');
   }
-  saveTags();
   appendListToElement(tagsArray, tagList);
+  saveTags();
 }
 
+function filterNotes(filter) {
+  filterArray = [];
+  if (filter == tagsArray) {
+    console.log('tags');
+  }
+  notesArray.forEach((note) => {
+    note.tags.filter(tag => {
+      if (tag === filter) {
+        filterArray.push(note);
+      };
+    });
+  })
+  console.log(filterArray);
+  clearDom();
+  showNotes(buildDom(filterArray));
+}
 
-
-/* ===  TO DO   ====================================================================
-  *** - Thoughts that left me friday the 30th of November - 1:13AM
-
-  *== [] - When creating a new tag, it should be saved as an object within the note
-  *== [] - When reloaded, the notes should be looped through to get the tags
-  *== [?] - Should the tags be in it's own array?
-  *== [] - If so, write a function that creates a new array of tag objects out of the names in the note.tags array. 
-  *== [?] - Is it good to randomize the colors of tags?
-  *== [] - If so, is it okay to generate a new color each time user refresh? (or tagsArray)
-*/
+// When note is removed, subtract tags from amount in tagsArray
