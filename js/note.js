@@ -19,6 +19,7 @@ class Note {
             do {
                 input = prompt(`Do you really wanna remove "${this.title}" completely? y/n`).toLowerCase();
                 if (input === 'y') {
+                    console.log(this.id);
                     database.nukeNote(this.id);
                     break;
                 }

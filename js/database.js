@@ -22,9 +22,14 @@ const database = {
     },
 
     nukeNote: (id) => {
-        let index = database.notes.indexOf(note => note.id === id);
-        database.notes.splice(index, 1);
-        DOM.update();
+        let index = database.notes.findIndex(note => note.id === id);
+        if (index => 0) {
+            database.notes.splice(index, 1);
+            console.log(`Nuked note: '${id}'`);
+            DOM.update();
+        } else {
+            console.log(`Could not find note in ${database.notes}`);
+        }
     },
 
     openNote: (id) => {
