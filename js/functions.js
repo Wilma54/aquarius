@@ -1,3 +1,29 @@
+/* 
+=================================================
+======{{ TO DO LIST }}===========================
+=================================================
+
+== []-> createElement function needs work
+== []-> Tags needs to render from notes not DB
+== ||----> Idea: when notes are loaded, all tags gets added from all notes
+== ||----> Maybe the tags can be added as an object to keep track of how many notes have got the same tag.
+== ||----> In that case write a function that returns a tag object
+== ||-------> Then write another function like this: 
+
+== ##-------> Get all the tags from notes in array
+== ##-------> Go through array and check if they exsist
+== ##-------> If not => add to database.tags
+== ##-------> If they do => add +1 to amount in said tag in database.tags
+== ##-------> Done! 
+
+== []-> Stretch goal: Implement color picker for tags
+
+=================================================
+=================================================
+=================================================
+*/
+
+
 /*
 ==================================
 ==== Element functions ===========
