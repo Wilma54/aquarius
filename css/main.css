@@ -330,26 +330,14 @@ nav ul li a {
     transition: transform 300ms, border-radius 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 500ms, color 300ms;
 }
 
-nav ul li a:hover {
+nav ul li a:hover,
+nav ul li a.active {
     border-radius: 25%;
     background: var(--accent-color);
     color: #fff;
     transform: scale(0.95);
 }
 
-nav ul li[data-menu-item="favourites"] a.active {
-    color: #fff;
-    border-radius: 25%;
-    background: var(--accent-color);
-    transform: scale(0.95);
-}
-
-nav ul li[data-menu-item="notes"] a.active {
-    border-radius: 25%;
-    background: var(--accent-color);
-    color: #fff;
-    transform: scale(0.95);
-}
 
 
 /*
