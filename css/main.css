@@ -54,7 +54,6 @@ a {
 ====== Menubar Styles =================================
 =======================================================
 */
-
 .menubar {
   position: fixed;
   top: 0;
@@ -89,7 +88,6 @@ a {
 ====== Sidebar Styles =================================
 =======================================================
 */
-
 #menu-btn-close {
   padding: 0.5rem;
   font-size: 1.5em;
@@ -135,7 +133,6 @@ a {
 /*
 ====== Notes section Styles ====================
 */
-
 #notes {
   background: var(--aside-color);
   color: var(--offwhite);
@@ -148,7 +145,6 @@ a {
 }
 
 /* Search styles */
-
 .search-wrapper {
   position: relative;
 }
@@ -183,7 +179,6 @@ a {
 }
 
 /* Tag list styles */
-
 #tag-container {
   padding: 0.8rem;
   border-radius: 5px;
@@ -221,7 +216,6 @@ a {
   color: #fff;
   opacity: 1;
 }
-
 
 .badge {
   font-size: 0.75rem;
@@ -277,7 +271,6 @@ a {
 }
 
 /* Note list styles */
-
 #notes ul li.note {
   list-style: none;
   padding: 1rem;
@@ -310,8 +303,13 @@ a {
   margin-bottom: 0.5em;
 }
 
-#notes ul li.note .note-item-wrapper div p:nth-last-child(2) {
+#notes ul li.note .note-item-wrapper div p:nth-last-child(3) {
   margin-bottom: 0.5em;
+}
+
+#notes ul li.note .note-item-wrapper div p:nth-last-child(2) {
+  font-size: 0.75em;
+  color: var(--muted);
 }
 
 #notes ul li.note .note-item-wrapper div p:nth-last-child(1) {
@@ -427,7 +425,6 @@ nav #main-menu li a.active {
 ====== Quill Styles ===================================
 =======================================================
 */
-
 #editor {
   border: none;
   height: calc(100vh - 9rem);
@@ -455,7 +452,6 @@ nav #main-menu li a.active {
 ====== Button Styles ==================================
 =======================================================
 */
-
 .tool-menu {
   position: absolute;
   bottom: 0rem;
@@ -542,13 +538,11 @@ nav #main-menu li a.active {
   transform: rotate(0deg);
 }
 
-
 /*
 =======================================================
 ====== Special Elements ===============================
 =======================================================
 */
-
 .hr-menu {
   width: 60%;
   margin-bottom: 0.5em;
@@ -583,7 +577,6 @@ nav #main-menu li a.active {
 ====== Scrollbar styles ===============================
 =======================================================
 */
-
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
@@ -610,7 +603,6 @@ nav #main-menu li a.active {
 ====== Utility Classes ================================
 =======================================================
 */
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -627,17 +619,13 @@ nav #main-menu li a.active {
   ========== WELCOME STYLES ===========
   =====================================
 */
-
 .welcome {
   height: 100vh;
   width: 100%;
   margin: 0 auto;
-
   background: linear-gradient(#99B5FF, var(--accent-color));
-
   display: flex;
   flex-direction: column;
-
   opacity: 1;
   transition: transform 400ms, opacity 400ms;
   overflow: hidden;
@@ -675,14 +663,11 @@ nav #main-menu li a.active {
   ========== Header styles ============
   =====================================
 */
-
 .welcome__header {
   position: relative;
-
   height: 5rem;
   padding: 1rem;
   margin-bottom: 1rem;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -706,24 +691,19 @@ nav #main-menu li a.active {
   ========== Slide styles =============
   =====================================
 */
-
 .slides {
   position: relative;
 }
 
 .slide {
   padding: 1rem;
-
   position: absolute;
-
   display: flex;
   justify-content: center;
   flex-direction: column;
-
   opacity: 0;
   transform: translateX(100%) scale(1);
   transition: transform 300ms, opacity 300ms;
-
 }
 
 .slide--fade-out {
@@ -739,7 +719,6 @@ nav #main-menu li a.active {
 
 .slide__wrapper {
   width: 80%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -776,7 +755,6 @@ nav #main-menu li a.active {
   ========== Slide list styles ========
   =====================================
 */
-
 .slide__list {
   padding: 0;
   list-style: none;
@@ -800,7 +778,6 @@ nav #main-menu li a.active {
   border-radius: 50%;
   background: #6B93FF;
   color: #fff;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -816,15 +793,12 @@ nav #main-menu li a.active {
   ========== Footer styles ============
   =====================================
 */
-
 .welcome__footer {
   width: 100%;
-
   position: absolute;
   bottom: 0;
   left: 0;
   z-index: 10;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -835,19 +809,15 @@ nav #main-menu li a.active {
   display: flex;
   justify-content: center;
   align-items: center;
-
   width: 166px;
   height: 55px;
   margin-bottom: 1rem;
-
   background: rgba(0, 0, 0, 0.3);
   border: none;
   border-radius: 8px;
   outline: none;
-
   color: #fff;
   font-weight: 600;
-
   transition: background 300ms;
 }
 
@@ -858,7 +828,6 @@ nav #main-menu li a.active {
 .welcome__footer__bubbles {
   padding: 1rem;
   margin-bottom: 1rem;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -869,12 +838,10 @@ nav #main-menu li a.active {
   ========== Bubble styles ============
   =====================================
 */
-
 .bubble {
   width: 8px;
   height: 8px;
   margin-left: 0.75rem;
-
   background: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   transition: background 300ms, width 300ms, height 300ms;
@@ -883,7 +850,6 @@ nav #main-menu li a.active {
 .bubble.active {
   width: 12px;
   height: 12px;
-
   background: rgba(255, 255, 255, 1);
 }
 
@@ -892,15 +858,12 @@ nav #main-menu li a.active {
   ========== Background layers ========
   =====================================
 */
-
 .welcome__background-layer-1,
 .welcome__background-layer-2 {
   opacity: 0;
-
   position: absolute;
   left: 0;
   bottom: 0;
-
   transition: opacity 300ms, transform 500ms;
   overflow: hidden;
 }
@@ -925,7 +888,6 @@ nav #main-menu li a.active {
   ========== @Media styles ============
   =====================================
 */
-
 @media screen and (min-width: 768px) {
   #welcome-lightbox {
     position: absolute;
@@ -969,7 +931,6 @@ nav #main-menu li a.active {
 }
 
 @media screen and (min-width: 1279px) {
-
   .wrapper {
     padding-top: 5.725rem;
     background-color: #f4f4f4;
